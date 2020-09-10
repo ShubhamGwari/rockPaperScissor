@@ -1,0 +1,78 @@
+<html>
+<head>
+
+</head>
+<body>
+
+</body>
+
+<script>
+    let computerSelection,playerSelection,result={},computer = 0,player = 0;
+
+    function computerPlay(){
+        let num = parseInt(((Math.random()*100)%3));
+        if(num == 0) return("ROCK");
+        else if(num == 1) return("PAPER");
+        else return("SCISSOR");
+    }
+
+    function playerInput(){
+        let input;
+        let entry = true;
+        do{
+            if(!entry) input=prompt("WRONG INPUT! ENTER ONE OF THESE ROCK,PAPER OR SCISSOR","ROCK").toUpperCase();
+            else input=prompt("ENTER ROCK,PAPER OR SCISSOR","ROCK").toUpperCase();
+
+            if(input == "ROCK" || input == "PAPER" || input == "SCISSOR") {entry = true; return(input);}
+            else{entry = false;}
+        }while(!entry)
+    }
+
+    function playRound(playerSelection,computerSelection){
+        if(playerSelection == computerSelection) return("AH! IT'S A DRAW");
+        switch(playerSelection){
+            case "ROCK": if(computerSelection == "PAPER") return("YOU LOSE! "+computerSelection + " BEATS "+ playerSelection);
+                         if(computerSelection == "SCISSOR") return("YOU WIN! "+playerSelection + " BEATS "+computerSelection);
+            break;
+            case "PAPER": if(computerSelection == "SCISSOR") return("YOU LOSE! "+computerSelection + " BEATS "+ playerSelection);
+                         if(computerSelection == "ROCK") return("YOU WIN! "+playerSelection + " BEATS "+computerSelection);
+            break;
+            case "SCISSOR": if(computerSelection == "ROCK") return("YOU LOSE! "+computerSelection + " BEATS "+ playerSelection);
+                         if(computerSelection == "PAPER") return("YOU WIN! "+playerSelection + " BEATS "+computerSelection);
+            break;
+            
+        }
+    }
+    function game(){
+        for(let i = 1; i<=5; i++){
+            playerSelection = playerInput();
+            computerSelection = computerPlay();
+            let res = playRound(playerSelection,computerSelection);
+            console.log(res);
+            result[i] = res;
+            res = res.substring(4,7);
+            if( res == "WIN"){ player++;}
+            else if(res == "LOS"){computer++;}
+        }
+        console.log("\n\n\n");
+
+    }
+    function fResult(){
+        console.log("******************** RESULT ********************\n\n")
+        for( let i = 1; i<=5; i++){
+            console.log("ROUND"+i+" :"+ result[i]+ "\n");
+        }
+        console.log("YOUR SCORE : "+ player);
+        console.log("COMPUTER'S SCORE : "+ computer);
+        if(player == computer) console.log("AH! IT'S A DRAW");
+        else if(player > computer) console.log("YOU WON BY "+ (player-computer) + " POINTS");
+        else console.log("YOU LOSE BY " + (computer - player) + " POINTS");
+    }
+
+    
+    game();
+    fResult();
+    
+
+</script>
+</html>
